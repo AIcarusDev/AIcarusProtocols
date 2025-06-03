@@ -1,4 +1,4 @@
-# AIcarus-Message-Protocol 通信协议文档 v1.4.0 (提案)
+# AIcarus-Message-Protocol 通信协议文档 v1.4.
 
 ## 1. 概述
 
@@ -6,7 +6,7 @@
 
 所有通信均通过 AIcarus-Message-Protocol 定义的 `Event` 对象进行封装和传输。`event_type` 字段用于明确事件的详细类型，而 `content` 字段则承载该事件的具体数据。
 
-**版本说明:** v1.4.0 (提案) - 此版本将通信的基本载体统一为 `Event` 对象。引入了层级化的 `event_type` (如 `message.group.normal`, `notice.conversation.member_increase`, `action.message.send`) 以取代原先的 `interaction_purpose` 和分散的类型定义。事件的具体参数和消息内容统一存放于 `content` 字段中。`ConversationInfo` 作为标准会话描述，`UserInfo` 保持不变，`Seg` 对象作为通用信息单元，用于承载各类事件的具体数据。
+**版本说明:** v1.4.0 - 此版本将通信的基本载体统一为 `Event` 对象。引入了层级化的 `event_type` (如 `message.group.normal`, `notice.conversation.member_increase`, `action.message.send`) 以取代原先的 `interaction_purpose` 和分散的类型定义。事件的具体参数和消息内容统一存放于 `content` 字段中。`ConversationInfo` 作为标准会话描述，`UserInfo` 保持不变，`Seg` 对象作为通用信息单元，用于承载各类事件的具体数据。
 
 ## 2. 核心数据结构
 
@@ -416,4 +416,4 @@ Adapter对Core发起的`action.*`的执行结果进行反馈。
 
 ## 5. 版本控制
 
-本协议当前版本为 **v1.4.0 (提案)**。后续如有不兼容的重大变更，将递增主版本号或次版本号。小的兼容性修正或补充可递增修订版本号。
+本协议当前版本为 **v1.4.0**。后续如有不兼容的重大变更，将递增主版本号或次版本号。小的兼容性修正或补充可递增修订版本号。
