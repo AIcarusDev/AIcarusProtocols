@@ -1,25 +1,46 @@
-# -*- coding: utf-8 -*-
-
 """
-AIcarus Protocols Package
-本包定义了 AIcarus 项目中 Core 与 Adapter 之间通信的消息结构。
+AIcarus-Message-Protocol v1.4.0 Python 实现
+本模块根据 AIcarus Message Protocol version 1.4.0 定义了数据结构。
 """
 
-# 从 base.py 中导入核心的数据结构类，方便用户直接从包顶层导入
-from .base import MessageBase, BaseMessageInfo, Seg, UserInfo, GroupInfo
+from .user_info import UserInfo
+from .conversation_info import ConversationInfo
+from .seg import Seg, SegBuilder
+from .event import Event
+from .common import (
+    PROTOCOL_VERSION,
+    EventType,
+    EventTypePrefix,
+    EventTypeRegistry,
+    ConversationType,
+    EventBuilder,
+    event_registry,
+    validate_event_type,
+    extract_text_from_content,
+    find_seg_by_type,
+    filter_segs_by_type,
+)
 
-# (可选) 定义包级别的 __version__，可以与 setup.py 中的版本同步
-# 如果 setup.py 从这里读取版本，可以避免版本信息分散
-# from .base import AICARUS_PROTOCOL_VERSION # 假设 base.py 也定义了这个
-# __version__ = AICARUS_PROTOCOL_VERSION
-# 或者直接硬编码：
-__version__ = "1.2.0"  # 确保与 setup.py 和文档一致
-
+__version__ = "1.4.0"
 __all__ = [
-    "MessageBase",
-    "BaseMessageInfo",
+    # 核心数据结构
+    "Event",
+    "UserInfo", 
+    "ConversationInfo",
     "Seg",
-    "UserInfo",
-    "GroupInfo",
-    "__version__",  # 如果定义了 __version__
+    
+    # 构建器和工具
+    "SegBuilder",
+    "EventBuilder",
+    
+    # 常量
+    "PROTOCOL_VERSION",
+    "EventType",
+    "ConversationType",
+    
+    # 工具函数
+    "validate_event_type",
+    "extract_text_from_content",
+    "find_seg_by_type",
+    "filter_segs_by_type",
 ]
