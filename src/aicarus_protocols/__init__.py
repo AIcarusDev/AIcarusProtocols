@@ -10,11 +10,8 @@ from .event import Event
 from .common import (
     PROTOCOL_VERSION,
     EventType,
-    EventTypePrefix,
-    EventTypeRegistry,
     ConversationType,
     EventBuilder,
-    event_registry,
     validate_event_type,
     extract_text_from_content,
     find_seg_by_type,
@@ -25,19 +22,16 @@ __version__ = "1.4.0"
 __all__ = [
     # 核心数据结构
     "Event",
-    "UserInfo", 
+    "UserInfo",
     "ConversationInfo",
     "Seg",
-    
     # 构建器和工具
     "SegBuilder",
     "EventBuilder",
-    
     # 常量
     "PROTOCOL_VERSION",
     "EventType",
     "ConversationType",
-    
     # 工具函数
     "validate_event_type",
     "extract_text_from_content",

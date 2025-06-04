@@ -3,7 +3,7 @@ AIcarus-Message-Protocol v1.4.0 - UserInfo 对象定义
 用于描述用户信息的数据结构。
 """
 
-from dataclasses import dataclass, field, asdict, fields as dataclass_fields
+from dataclasses import dataclass, field, fields as dataclass_fields
 from typing import Optional, Dict, Any
 
 

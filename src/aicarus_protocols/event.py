@@ -3,7 +3,7 @@ AIcarus-Message-Protocol v1.4.0 - Event 对象定义
 所有交互的顶层载体。
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List, Optional, Dict, Any
 from .user_info import UserInfo
 from .conversation_info import ConversationInfo
@@ -37,16 +37,16 @@ class Event:
             "bot_id": self.bot_id,
             "content": [seg.to_dict() for seg in self.content],
         }
-        
+
         if self.user_info is not None:
             result["user_info"] = self.user_info.to_dict()
-        
+
         if self.conversation_info is not None:
             result["conversation_info"] = self.conversation_info.to_dict()
-        
+
         if self.raw_data is not None:
             result["raw_data"] = self.raw_data
-        
+
         return result
 
     @classmethod
@@ -58,17 +58,21 @@ class Event:
         time = data.get("time", 0.0)
         platform = data.get("platform", "unknown")
         bot_id = data.get("bot_id", "unknown")
-        
+
         # 处理 content 字段
         content_data = data.get("content", [])
         if not isinstance(content_data, list):
             content_data = []
-        content = [Seg.from_dict(seg_data) for seg_data in content_data if isinstance(seg_data, dict)]
-        
+        content = [
+            Seg.from_dict(seg_data)
+            for seg_data in content_data
+            if isinstance(seg_data, dict)
+        ]
+
         # 处理可选字段
         user_info_data = data.get("user_info")
         conversation_info_data = data.get("conversation_info")
-        
+
         return cls(
             event_id=event_id,
             event_type=event_type,
@@ -77,7 +81,9 @@ class Event:
             bot_id=bot_id,
             content=content,
             user_info=UserInfo.from_dict(user_info_data) if user_info_data else None,
-            conversation_info=ConversationInfo.from_dict(conversation_info_data) if conversation_info_data else None,
+            conversation_info=ConversationInfo.from_dict(conversation_info_data)
+            if conversation_info_data
+            else None,
             raw_data=data.get("raw_data"),
         )
 

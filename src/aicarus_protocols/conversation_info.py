@@ -30,11 +30,11 @@ class ConversationInfo:
         """从字典创建 ConversationInfo 实例。"""
         if data is None:
             return None
-        
+
         # 确保必需字段存在
         conversation_id = data.get("conversation_id", "unknown_conversation")
         conversation_type = data.get("type", "unknown")
-        
+
         return cls(
             conversation_id=conversation_id,
             type=conversation_type,
