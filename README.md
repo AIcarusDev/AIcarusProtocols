@@ -20,11 +20,6 @@ pip install -e .
 
 这将允许你在开发 Core 或 Adapter 时，如果修改了本协议库的代码，更改会立即生效，无需重新安装。
 
-如果你想将其打包分发（例如上传到 PyPI），则需要构建 wheel 包：
-```bash
-python setup.py sdist bdist_wheel
-```
-
 ## 使用示例
 
 在你的 Core 或 Adapter 项目中，你可以这样导入和使用协议中定义的类：
