@@ -565,12 +565,21 @@ class EventBuilder:
         )
 
 
-def extract_text_from_content(content: List[Seg]) -> str:
-    """从 content 中提取所有文本内容。"""
+def extract_text_from_content(content: List[Any]) -> str: # 更改类型提示以反映实际情况
+    """从 content 中提取所有文本内容。content 中的元素可以是 Seg 对象或字典。"""
     text_parts = []
     for seg in content:
-        if seg.type == "text" and "text" in seg.data:
-            text_parts.append(seg.data["text"])
+        seg_type = None
+        seg_data = None
+        if isinstance(seg, Seg): # 如果是 Seg 对象
+            seg_type = seg.type
+            seg_data = seg.data
+        elif isinstance(seg, dict): # 如果是字典
+            seg_type = seg.get("type")
+            seg_data = seg.get("data")
+        
+        if seg_type == "text" and seg_data and "text" in seg_data:
+            text_parts.append(seg_data["text"])
     return "".join(text_parts)
 
 
