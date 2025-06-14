@@ -26,7 +26,6 @@ class Event:
     user_info: Optional[UserInfo] = None  # 与事件最直接相关的用户信息
     conversation_info: Optional[ConversationInfo] = None  # 事件发生的会话上下文信息
     raw_data: Optional[str] = None  # 原始事件的字符串表示
-    motivation: Optional[str] = None # 新增：用于存储消息的动机，特别是机器人发出的消息
 
     def to_dict(self) -> Dict[str, Any]:
         """将 Event 实例转换为字典。"""
@@ -47,9 +46,6 @@ class Event:
 
         if self.raw_data is not None:
             result["raw_data"] = self.raw_data
-        
-        if self.motivation is not None: # 新增
-            result["motivation"] = self.motivation
 
         return result
 
@@ -89,7 +85,6 @@ class Event:
             if conversation_info_data
             else None,
             raw_data=data.get("raw_data"),
-            motivation=data.get("motivation"), # 新增
         )
 
     def get_message_id(self) -> Optional[str]:
