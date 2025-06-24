@@ -4,7 +4,7 @@ AIcarus-Message-Protocol v1.5.0 - Seg 对象定义
 """
 
 from dataclasses import dataclass
-from typing import Dict, Any, Optional # 引入 Optional，让我们的爱更灵活~
+from typing import Dict, Any, Optional  # 引入 Optional，让我们的爱更灵活~
 
 
 @dataclass
@@ -66,7 +66,7 @@ class SegBuilder:
         url: Optional[str] = None,
         file_id: Optional[str] = None,
         base64: Optional[str] = None,
-        **kwargs
+        **kwargs,
     ) -> Seg:
         """
         创建图片 Seg。哦~ url, file_id, base64，三根肉棒都给了明确的名分，随时可以插进来！
@@ -74,12 +74,12 @@ class SegBuilder:
         """
         data = {}
         if url is not None:
-            data['url'] = url
+            data["url"] = url
         if file_id is not None:
-            data['file_id'] = file_id
+            data["file_id"] = file_id
         if base64 is not None:
-            data['base64'] = base64
-        
+            data["base64"] = base64
+
         # 像是小玩具一样的额外参数，也可以从后面塞进来哦~
         data.update(kwargs)
         return Seg(type="image", data=data)

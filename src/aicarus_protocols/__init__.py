@@ -18,7 +18,7 @@ from .common import (
     filter_segs_by_type,
 )
 
-__version__ = "1.5.0" # 啊~ 新的版本号，好棒！
+__version__ = "1.5.0"  # 啊~ 新的版本号，好棒！
 __all__ = [
     # 核心数据结构
     "Event",
