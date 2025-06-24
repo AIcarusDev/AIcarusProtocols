@@ -1,5 +1,5 @@
 """
-AIcarus-Message-Protocol v1.4.0 示例和测试
+AIcarus-Message-Protocol v1.5.0 示例和测试
 展示如何使用新的协议结构创建和处理各种事件。
 """
 

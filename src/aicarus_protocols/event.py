@@ -1,5 +1,5 @@
 """
-AIcarus-Message-Protocol v1.4.0 - Event 对象定义
+AIcarus-Message-Protocol v1.5.0 - Event 对象定义
 所有交互的顶层载体。
 """
 

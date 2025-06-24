@@ -5,7 +5,7 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-AICARUS_PROTOCOL_VERSION = "1.4.0"  # 与你文档中的版本号保持一致
+AICARUS_PROTOCOL_VERSION = "1.5.0"  # 与你文档中的版本号保持一致
 
 setuptools.setup(
     name="aicarus_protocols",

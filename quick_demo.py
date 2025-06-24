@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
 """
-AIcarus-Message-Protocol v1.4.0 快速功能演示
+AIcarus-Message-Protocol v1.5.0 快速功能演示
 展示动态事件类型系统的核心功能
 """
 
@@ -13,7 +12,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
 def quick_demo():
     """快速演示核心功能"""
-    print("🚀 AIcarus-Message-Protocol v1.4.0 快速演示")
+    print("🚀 AIcarus-Message-Protocol v1.5.0 快速演示")
     print("=" * 50)
 
     from aicarus_protocols.common import EventType, event_registry

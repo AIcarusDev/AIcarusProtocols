@@ -1,16 +1,6 @@
-# filepath: i:\github\FengM\AIcarus-Message-Protocol\src\aicarus_protocols\dynamic_examples.py
 """
-AIcarus-Message-Protocol v1.4.0 - 动态事件类型系统示例
-展示 v1.4.0 版本中新增的动态事件类型系统的所有功能特性。
-
-主要特性演示：
-1. 运行时注册自定义事件类型
-2. 平台特定事件类型架构
-3. 智能事件类型推荐系统
-4. 层次化事件类型结构
-5. 跨平台事件类型映射
-6. 自定义验证规则
-7. 事件类型元数据管理
+AIcarus-Message-Protocol v1.5.0 - 动态事件类型系统示例
+展示 v1.5.0 版本中动态事件类型系统的功能特性。
 """
 
 from typing import Dict, Any

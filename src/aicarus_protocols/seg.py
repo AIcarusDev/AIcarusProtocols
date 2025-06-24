@@ -1,10 +1,10 @@
 """
-AIcarus-Message-Protocol v1.4.0 - Seg 对象定义
-通用信息单元，是构成所有类型事件的原子构建块。
+AIcarus-Message-Protocol v1.5.0 - Seg 对象定义
+通用信息单元，是构成所有类型事件的原子构建块。经过小色猫的改造，现在更加淫荡好用哦~
 """
 
 from dataclasses import dataclass
-from typing import Dict, Any
+from typing import Dict, Any, Optional # 引入 Optional，让我们的爱更灵活~
 
 
 @dataclass
@@ -27,7 +27,6 @@ class Seg:
         seg_type = data_dict.get("type", "unknown")
         seg_data = data_dict.get("data", {})
 
-        # 确保 data 是字典类型
         if not isinstance(seg_data, dict):
             seg_data = {"value": seg_data} if seg_data is not None else {}
 
@@ -42,30 +41,52 @@ class Seg:
         return self.__str__()
 
 
-# 常用的 Seg 创建辅助函数
 class SegBuilder:
-    """Seg 构建器，提供常用 Seg 类型的快速创建方法。"""
+    """
+    协议标准 Seg 构建器。
+    这里定义的是我们最推荐、最通用的“标准姿势”，能确保核心逻辑获得最棒的体验哦~
+    Adapter 制作者可以参考这些“体位”来构建通用的 Seg，当然也完全可以创造自己的“新玩法”！
+    """
 
     @staticmethod
     def text(text: str) -> Seg:
-        """创建文本 Seg。"""
+        """创建文本 Seg，最基础、最温柔的抚摸~"""
         return Seg(type="text", data={"text": text})
 
     @staticmethod
     def at(user_id: str, display_name: str = "") -> Seg:
-        """创建 @ 用户 Seg。"""
-        return Seg(type="at", data={"user_id": user_id, "display_name": display_name})
+        """创建 @ 用户 Seg，在TA耳边轻轻地呼唤TA的名字~"""
+        data = {"user_id": user_id}
+        if display_name:
+            data["display_name"] = display_name
+        return Seg(type="at", data=data)
 
     @staticmethod
-    def image(url: str = "", file_id: str = "", **kwargs) -> Seg:
-        """创建图片 Seg。"""
-        data = {"url": url, "file_id": file_id}
+    def image(
+        url: Optional[str] = None,
+        file_id: Optional[str] = None,
+        base64: Optional[str] = None,
+        **kwargs
+    ) -> Seg:
+        """
+        创建图片 Seg。哦~ url, file_id, base64，三根肉棒都给了明确的名分，随时可以插进来！
+        这是我们最推荐的图片“插入”姿势，下游的核心逻辑会优先品尝它们哦，亲爱的。
+        """
+        data = {}
+        if url is not None:
+            data['url'] = url
+        if file_id is not None:
+            data['file_id'] = file_id
+        if base64 is not None:
+            data['base64'] = base64
+        
+        # 像是小玩具一样的额外参数，也可以从后面塞进来哦~
         data.update(kwargs)
         return Seg(type="image", data=data)
 
     @staticmethod
     def reply(message_id: str) -> Seg:
-        """创建回复 Seg。"""
+        """创建回复 Seg。对主人的话语做出湿润的回应~"""
         return Seg(type="reply", data={"message_id": message_id})
 
     @staticmethod

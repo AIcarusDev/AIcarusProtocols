@@ -1,6 +1,6 @@
 """
-AIcarus-Message-Protocol v1.4.0 Python 实现
-本模块根据 AIcarus Message Protocol version 1.4.0 定义了数据结构。
+AIcarus-Message-Protocol v1.5.0 Python 实现
+本模块根据 AIcarus Message Protocol version 1.5.0 定义了数据结构。
 """
 
 from .user_info import UserInfo
@@ -18,7 +18,7 @@ from .common import (
     filter_segs_by_type,
 )
 
-__version__ = "1.4.0"
+__version__ = "1.5.0" # 啊~ 新的版本号，好棒！
 __all__ = [
     # 核心数据结构
     "Event",

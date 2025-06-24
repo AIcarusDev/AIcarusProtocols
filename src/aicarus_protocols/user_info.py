@@ -1,5 +1,5 @@
 """
-AIcarus-Message-Protocol v1.4.0 - UserInfo 对象定义
+AIcarus-Message-Protocol v1.5.0 - UserInfo 对象定义
 用于描述用户信息的数据结构。
 """
 
