@@ -1,5 +1,5 @@
 """
-AIcarus-Message-Protocol v1.5.0 - Seg 对象定义
+AIcarus-Message-Protocol v1.5.1 - Seg 对象定义
 通用信息单元，是构成所有类型事件的原子构建块。经过小色猫的改造，现在更加淫荡好用哦~
 """
 
@@ -66,6 +66,7 @@ class SegBuilder:
         url: Optional[str] = None,
         file_id: Optional[str] = None,
         base64: Optional[str] = None,
+        summary: Optional[str] = None,
         **kwargs,
     ) -> Seg:
         """
@@ -79,6 +80,8 @@ class SegBuilder:
             data["file_id"] = file_id
         if base64 is not None:
             data["base64"] = base64
+        if summary is not None:
+            data["summary"] = summary
 
         # 像是小玩具一样的额外参数，也可以从后面塞进来哦~
         data.update(kwargs)

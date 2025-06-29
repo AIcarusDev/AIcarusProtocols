@@ -1,5 +1,5 @@
 """
-AIcarus-Message-Protocol v1.5.0 - 通用工具和类型定义
+AIcarus-Message-Protocol v1.5.1 - 通用工具和类型定义
 提供协议相关的常量、工具函数和构建器。
 """
 
@@ -13,7 +13,7 @@ from .conversation_info import ConversationInfo
 
 
 # 协议版本
-PROTOCOL_VERSION = "1.5.0"
+PROTOCOL_VERSION = "1.5.1"
 
 
 def validate_event_type(event_type: str) -> bool:

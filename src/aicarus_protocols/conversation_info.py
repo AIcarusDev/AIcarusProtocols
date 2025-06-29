@@ -1,5 +1,5 @@
 """
-AIcarus-Message-Protocol v1.5.0 - ConversationInfo 对象定义
+AIcarus-Message-Protocol v1.5.1 - ConversationInfo 对象定义
 用于描述会话信息的数据结构。
 """
 
