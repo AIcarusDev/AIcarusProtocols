@@ -1,5 +1,5 @@
 """
-AIcarus-Message-Protocol v1.5.1 - UserInfo 对象定义
+AIcarus-Message-Protocol v1.6.0 - UserInfo 对象定义
 用于描述用户信息的数据结构。
 """
 
@@ -14,7 +14,6 @@ class UserInfo:
     用于描述用户信息。
     """
 
-    platform: Optional[str] = None  # 平台标识
     user_id: Optional[str] = None  # 用户唯一ID
     user_nickname: Optional[str] = None  # 用户昵称
     user_cardname: Optional[str] = None  # 用户在群组中的名片/备注
@@ -46,11 +45,10 @@ class UserInfo:
 
     @classmethod
     def from_dict(cls, data: Optional[Dict[str, Any]]) -> Optional["UserInfo"]:
-        """从字典创建 UserInfo 实例。"""
         if data is None:
             return None
+        # 移除 platform 的读取
         return cls(
-            platform=data.get("platform"),
             user_id=data.get("user_id"),
             user_nickname=data.get("user_nickname"),
             user_cardname=data.get("user_cardname"),
@@ -61,5 +59,5 @@ class UserInfo:
             sex=data.get("sex"),
             age=data.get("age"),
             area=data.get("area"),
-            additional_data=data.get("additional_data", {}),  # 确保默认为空字典
+            additional_data=data.get("additional_data", {}),
         )
