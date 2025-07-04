@@ -11,10 +11,11 @@ def extract_text_from_content(content: List[Seg]) -> str:
     """从 content 中提取所有文本内容。"""
     if not content:
         return ""
-    text_parts = []
-    for seg in content:
-        if seg.type == "text" and "text" in seg.data:
-            text_parts.append(seg.data["text"])
+    text_parts = [
+        seg.data["text"]
+        for seg in content
+        if seg.type == "text" and "text" in seg.data
+    ]
     return "".join(text_parts)
 
 
