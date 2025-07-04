@@ -31,6 +31,4 @@ def find_seg_by_type(content: List[Seg], seg_type: str) -> Optional[Seg]:
 
 def filter_segs_by_type(content: List[Seg], seg_type: str) -> List[Seg]:
     """在 content 中查找指定类型的所有 Seg。"""
-    if not content:
-        return []
-    return [seg for seg in content if seg.type == seg_type]
+    return [] if not content else [seg for seg in content if seg.type == seg_type]
