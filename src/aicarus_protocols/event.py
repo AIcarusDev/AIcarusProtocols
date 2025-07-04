@@ -1,6 +1,6 @@
 """
-AIcarus-Message-Protocol v1.5.1 - Event 对象定义
-所有交互的顶层载体。
+AIcarus-Message-Protocol v1.6.0 - Event 对象定义 (小色猫·绝对统治版)
+所有交互的顶层载体，platform的荣耀已尽数归于event_type。
 """
 
 from dataclasses import dataclass
@@ -14,18 +14,25 @@ from .seg import Seg
 class Event:
     """
     2.1. Event 对象
-    所有交互的顶层载体。
+    所有交互的顶层载体。platform 字段已被移除，其信息被整合进 event_type。
     """
 
     event_id: str  # 事件包装对象的唯一标识符
-    event_type: str  # 描述事件类型的字符串，采用点分层级结构
+    event_type: str  # 描述事件类型的字符串，采用 {prefix}.{platform}.{...} 的结构
     time: float  # 事件发生的Unix毫秒时间戳
-    platform: str  # 事件来源或动作目标的平台标识符
     bot_id: str  # 机器人自身在该平台上的ID
     content: List[Seg]  # 事件的具体内容，表现为一个 Seg 对象列表
     user_info: Optional[UserInfo] = None  # 与事件最直接相关的用户信息
     conversation_info: Optional[ConversationInfo] = None  # 事件发生的会话上下文信息
     raw_data: Optional[str] = None  # 原始事件的字符串表示
+
+    def get_platform(self) -> Optional[str]:
+        """
+        从 event_type 中解析并返回平台ID。
+        例如，从 "message.napcat.group" 中返回 "napcat"。
+        """
+        parts = self.event_type.split(".")
+        return parts[1] if len(parts) >= 2 else None
 
     def to_dict(self) -> Dict[str, Any]:
         """将 Event 实例转换为字典。"""
@@ -33,7 +40,6 @@ class Event:
             "event_id": self.event_id,
             "event_type": self.event_type,
             "time": self.time,
-            "platform": self.platform,
             "bot_id": self.bot_id,
             "content": [seg.to_dict() for seg in self.content],
         }
@@ -54,9 +60,10 @@ class Event:
         """从字典创建 Event 实例。"""
         # 确保必需字段存在
         event_id = data.get("event_id", "unknown_event")
-        event_type = data.get("event_type", "unknown")
+        event_type = data.get(
+            "event_type", "unknown.unknown.unknown"
+        )  # 给个符合格式的默认值
         time = data.get("time", 0.0)
-        platform = data.get("platform", "unknown")
         bot_id = data.get("bot_id", "unknown")
 
         # 处理 content 字段
@@ -77,7 +84,6 @@ class Event:
             event_id=event_id,
             event_type=event_type,
             time=time,
-            platform=platform,
             bot_id=bot_id,
             content=content,
             user_info=UserInfo.from_dict(user_info_data) if user_info_data else None,
@@ -128,7 +134,7 @@ class Event:
 
     def __str__(self) -> str:
         """返回 Event 的字符串表示。"""
-        return f"Event(id='{self.event_id}', type='{self.event_type}', platform='{self.platform}')"
+        return f"Event(id='{self.event_id}', type='{self.event_type}')"
 
     def __repr__(self) -> str:
         """返回 Event 的详细表示。"""

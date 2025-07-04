@@ -1,6 +1,7 @@
+# quick_demo.py
 """
-AIcarus-Message-Protocol v1.5.0 快速功能演示
-展示动态事件类型系统的核心功能
+AIcarus-Message-Protocol v1.6.0 快速功能演示
+展示基于命名空间的动态事件类型系统。
 """
 
 import sys
@@ -12,57 +13,60 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
 def quick_demo():
     """快速演示核心功能"""
-    print("🚀 AIcarus-Message-Protocol v1.5.0 快速演示")
+    print("🚀 AIcarus-Message-Protocol v1.6.0 快速演示")
     print("=" * 50)
 
-    from aicarus_protocols.common import EventType, event_registry
+    # 从新模块导入
+    from aicarus_protocols import (
+        EventType,
+        validate_event_type,
+    )
+    from aicarus_protocols import Event
 
-    # 1. 基础注册演示
-    print("1️⃣ 基础事件类型注册")
-    EventType.register("message.demo.quick", "快速演示消息", "demo")
-    print("   ✅ 注册成功: message.demo.quick")
+    # 1. 动态、自由的事件类型注册
+    print("1️⃣ 动态事件类型注册 (遵循命名空间规则)")
+    EventType.register("message.my_platform.custom_sticker", "我的平台的自定义贴纸")
+    EventType.register("action.another_app.execute_script", "另一个应用执行脚本")
+    print("   ✅ 注册成功: message.my_platform.custom_sticker")
+    print("   ✅ 注册成功: action.another_app.execute_script")
 
-    # 2. 平台架构演示
-    print("\n2️⃣ 平台架构注册")
-    demo_schema = {
-        "version": "1.0.0",
-        "platform": "demo_platform",
-        "types": {
-            "message.demo_platform.send": "发送消息",
-            "action.demo_platform.kick": "踢出用户",
-        },
-    }
-    EventType.register_platform_schema("demo_platform", demo_schema)
-    platform_types = EventType.get_all_by_platform("demo_platform")
-    print(f"   ✅ 注册平台架构，包含 {len(platform_types)} 个事件类型")
-
-    # 3. 智能推荐演示
-    print("\n3️⃣ 智能事件类型推荐")
-    suggestions = EventType.suggest_event_type("demo_platform", "send", "")
+    # 2. 统一的验证规则
+    print("\n2️⃣ 统一的事件类型验证")
+    valid_type = "notice.qq.friend_add"
+    invalid_type = "message.private"  # 旧格式，现在不合法了
     print(
-        f"   🎯 推荐事件类型: {suggestions[:2] if len(suggestions) >= 2 else suggestions}"
+        f"   - 验证 '{valid_type}': {'合法' if validate_event_type(valid_type) else '非法'}"
+    )
+    print(
+        f"   - 验证 '{invalid_type}': {'合法' if validate_event_type(invalid_type) else '非法'}"
     )
 
-    # 4. 统计信息
-    print("\n📊 系统统计")
-    all_types = event_registry.get_all_types()
-    platforms = event_registry.get_platforms()
-    print(f"   - 总事件类型: {len(all_types)} 个")
-    print(f"   - 支持平台: {len(platforms)} 个")
-    print(f"   - 平台列表: {', '.join(platforms)}")
+    # 3. 从事件中轻松获取平台信息
+    print("\n3️⃣ 从事件中解析平台信息")
+    test_event = Event(
+        event_id="demo-event-1",
+        event_type="action.telegram.send_poll",
+        time=0,
+        bot_id="tg_bot",
+        content=[],
+    )
+    platform = test_event.get_platform()
+    print(f"   - 事件类型: '{test_event.event_type}'")
+    print(f"   - 解析出的平台: '{platform}'")
 
-    # 5. 事件类型分类统计
-    print("\n📋 事件类型分类")
-    categories = ["message", "notice", "request", "action", "action_response", "meta"]
-    for category in categories:
-        count = len(EventType.get_all_by_prefix(category))
-        print(f"   - {category.upper()}: {count} 个")
+    # 4. 移除了顶层的 platform 字段
+    print("\n4️⃣ Event 对象结构简化")
+    event_dict = test_event.to_dict()
+    has_platform_field = "platform" in event_dict
+    print(
+        f"   - Event 字典中是否还存在顶层 'platform' 字段: {'是' if has_platform_field else '否，已被移除！'}"
+    )
 
     print("\n" + "=" * 50)
-    print("🎉 演示完成！动态事件类型系统运行正常")
-    print("\n💡 要查看完整演示，请运行:")
+    print("🎉 演示完成！基于命名空间的动态事件系统运行正常！")
+    print("\n💡 要查看更详细的示例，请运行:")
     print(
-        '   python -c "from aicarus_protocols.dynamic_examples import run_all_demos; run_all_demos()"'
+        "   python -m src.aicarus_protocols.examples"  # 推荐运行这个，更详细
     )
 
 
