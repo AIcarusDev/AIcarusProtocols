@@ -32,9 +32,7 @@ class Event:
         例如，从 "message.napcat.group" 中返回 "napcat"。
         """
         parts = self.event_type.split(".")
-        if len(parts) >= 2:
-            return parts[1]
-        return None
+        return parts[1] if len(parts) >= 2 else None
 
     def to_dict(self) -> Dict[str, Any]:
         """将 Event 实例转换为字典。"""
