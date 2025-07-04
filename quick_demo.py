@@ -66,7 +66,7 @@ def quick_demo():
     print("🎉 演示完成！基于命名空间的动态事件系统运行正常！")
     print("\n💡 要查看更详细的示例，请运行:")
     print(
-        '   python -m src.aicarus_protocols.examples' # 推荐运行这个，更详细
+        "   python -m src.aicarus_protocols.examples"  # 推荐运行这个，更详细
     )
 
 
