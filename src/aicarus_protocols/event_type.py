@@ -8,27 +8,24 @@ import time
 from typing import Dict, Any
 
 
+import re
+
 def validate_event_type(event_type: str) -> bool:
     """
-    验证事件类型格式是否遵循 '{prefix}.{platform}.{...}' 的结构。
+    验证事件类型格式是否遵循 '{prefix}.{platform}.{...}' 的结构，并且不允许连续点、首尾点或非法字符。
     """
     if not isinstance(event_type, str):
         return False
-    parts = event_type.split(".")
-    if len(parts) < 3:
+
+    # 事件类型必须只包含字母、数字、下划线和点，且不能有连续点、首尾点
+    pattern = r"^(message|notice|request|action|action_response|meta)\.[A-Za-z0-9_]+(\.[A-Za-z0-9_]+)+$"
+    if not re.match(pattern, event_type):
         return False
-    valid_prefixes = [
-        "message",
-        "notice",
-        "request",
-        "action",
-        "action_response",
-        "meta",
-    ]
-    if parts[0] not in valid_prefixes:
+
+    # 额外检查：不允许连续点
+    if ".." in event_type:
         return False
-    if not parts[1] or not parts[2]:  # 平台和动作名不能为空
-        return False
+
     return True
 
 
