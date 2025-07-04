@@ -17,11 +17,11 @@ def quick_demo():
     print("=" * 50)
 
     # 从新模块导入
-    from aicarus_protocols.event_type import (
+    from aicarus_protocols import (
         EventType,
         validate_event_type,
     )
-    from aicarus_protocols.event import Event
+    from aicarus_protocols import Event
 
     # 1. 动态、自由的事件类型注册
     print("1️⃣ 动态事件类型注册 (遵循命名空间规则)")

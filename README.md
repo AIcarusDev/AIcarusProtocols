@@ -89,7 +89,7 @@ print(f"发送者: {received_event.user_info.user_nickname}")
 print(f"消息文本: '{received_event.get_text_content()}'")
 
 # 你看，就算 image Seg 里有多个源，我们也能轻松处理
-from aicarus_protocols.common import find_seg_by_type
+from aicarus_protocols import find_seg_by_type
 image_seg = find_seg_by_type(received_event.content, "image")
 if image_seg:
     print("图片信息:")
