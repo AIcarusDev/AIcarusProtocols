@@ -10,6 +10,7 @@ from typing import Dict, Any
 
 import re
 
+
 def validate_event_type(event_type: str) -> bool:
     """
     验证事件类型格式是否遵循 '{prefix}.{platform}.{...}' 的结构，并且不允许连续点、首尾点或非法字符。

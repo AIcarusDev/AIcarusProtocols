@@ -12,9 +12,7 @@ def extract_text_from_content(content: List[Seg]) -> str:
     if not content:
         return ""
     text_parts = [
-        seg.data["text"]
-        for seg in content
-        if seg.type == "text" and "text" in seg.data
+        seg.data["text"] for seg in content if seg.type == "text" and "text" in seg.data
     ]
     return "".join(text_parts)
 
