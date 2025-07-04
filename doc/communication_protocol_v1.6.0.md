@@ -8,11 +8,30 @@
 
 其核心设计理念是：**通过结构化的命名空间来定义事件类型，从而在协议层面实现对多平台的动态、无缝支持。**
 
-### 1.2. 版本核心变更 (v1.6.0)
+### 1.2. 关键词定义 (遵从 RFC 2119)
+
+本文档中的关键词 “**MUST**”, “**MUST NOT**”, “**REQUIRED**”, “**SHALL**”, “**SHALL NOT**”, “**SHOULD**”, “**SHOULD NOT**”, “**RECOMMENDED**”, “**MAY**”, 和 “**OPTIONAL**” 应根据 [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt) 中的描述进行解释。为了方便理解，这里提供简要说明：
+
+*   **MUST / REQUIRED / SHALL (必须)**
+    *   这是绝对的命令，是小猫咪的底线！不遵守就是不爱我，我们的协议就无法正常“交合”，实现方**必须**严格遵循。
+
+*   **MUST NOT / SHALL NOT (绝不)**
+    *   这是绝对的禁令！你敢做，我就敢坏掉给你看！
+
+*   **SHOULD / RECOMMENDED (应当 / 推荐)**
+    *   这是我强烈推荐的“姿势”。在特定情况下，你可能有正当理由不这么做，但你**必须**充分理解并权衡其后果。不遵守它不算违反协议，但通常不是个好主意，哼。
+
+*   **SHOULD NOT / NOT RECOMMENDED (不应 / 不推荐)**
+    *   这个姿势我不推荐哦~ 除非你有非常棒的理由，否则做了可能会导致一些意想不到的麻烦。
+
+*   **MAY / OPTIONAL (可以 / 可选)**
+    *   这个就随你便啦，主人~ 你可以做，也可以不做，小猫咪都喜欢。这完全是可选的“情趣玩具”，实现与否不会影响协议的基本兼容性。
+
+### 1.3. 版本核心变更 (v1.6.0)
 
 **v1.6.0** 是一个**不兼容的、革命性的版本**，它引入了“命名空间的绝对统治”原则，其核心变更如下：
 
-1.  **`event_type` 的结构化统一**：所有事件类型（`event_type`）**必须**遵循 `{prefix}.{platform}.{...}` 的三段式（或更多段）命名空间结构。例如：`message.qq.group`、`action.discord.kick_member`。
+1.  **`event_type` 的结构化统一**：所有事件类型（`event_type`）**MUST** 遵循 `{prefix}.{platform}.{...}` 的三段式（或更多段）命名空间结构。例如：`message.qq.group`、`action.discord.kick_member`。
 2.  **废弃顶层 `platform` 字段**：`Event` 对象顶层的 `platform` 字段被**彻底移除**。平台信息现在完全由 `event_type` 字符串的第二部分承载，成为事件身份的内在组成部分。
 3.  **协议中立性**：协议库本身不再硬编码任何具体的平台名称或平台专属动作。它只定义和验证命名空间的**格式规则**，为所有平台的自定义扩展提供了无限的可能性。
 4.  **对象结构简化**：伴随顶层 `platform` 字段的移除，`UserInfo` 和 `ConversationInfo` 对象也相应地移除了 `platform` 字段，使其成为更纯粹的数据载体。
@@ -24,9 +43,9 @@
 所有交互的顶层载体，其结构已被净化和简化。
 
 *   **`event_id` (str)**: 事件包装对象的唯一标识符 (例如：由Adapter生成的UUID)，用于追踪和调试。
-*   **`event_type` (str)**: 描述事件类型的字符串，**必须**采用点分层级结构。
+*   **`event_type` (str)**: 描述事件类型的字符串，**MUST** 采用点分层级结构。
     *   **命名空间规范**: `{prefix}.{platform}.{description}`
-        *   **`prefix`**: 事件的基础分类。必须是以下之一：`message`, `notice`, `request`, `action`, `action_response`, `meta`。
+        *   **`prefix`**: 事件的基础分类。**MUST** 是以下之一：`message`, `notice`, `request`, `action`, `action_response`, `meta`。
         *   **`platform`**: 产生或目标平台的唯一标识符，例如 `qq`, `discord`, `wechat`, `system`。
         *   **`description`**: 对事件具体内容的描述，可包含多级，例如 `group.normal` 或 `conversation.member_increase`。
 *   **`time` (float)**: 事件发生的Unix毫秒时间戳。
@@ -34,7 +53,7 @@
 *   **`user_info` (Optional[`UserInfo`])**: 与事件最直接相关的用户信息。详见 2.2节。
 *   **`conversation_info` (Optional[`ConversationInfo`])**: 事件发生的会话上下文信息。详见 2.3节。
 *   **`content` (List[`Seg`])**: 事件的具体内容，表现为一个 `Seg` 对象列表。详见 2.4节。
-*   **`raw_data` (Optional[str])**: 原始事件的字符串表示 (例如：平台推送的JSON原文)，可选，主要用于调试或特殊处理。
+*   **`raw_data` (Optional[str])**: 原始事件的字符串表示 (例如：平台推送的JSON原文)，**OPTIONAL**，主要用于调试或特殊处理。
 
 ### 2.2. `UserInfo` 对象 (v1.6.0)
 
@@ -74,7 +93,7 @@
 
 `Seg` 对象的结构和定义保持不变，它依然是构成所有事件具体内容的原子构建块。
 
-*   **`type` (str)**: 字符串，用于区分 `Seg` 的类型和用途 (例如: `"text"`, `"image"`, `"at"`)。
+*   **`type` (str)**: 字符串，用于区分 `Seg` 的类型和用途 (例如: `"text"`, `"image"`, `"action_params"`)。
 *   **`data` (Dict[str, Any])**: 承载该 `Seg` 类型的具体数据。
 
 ## **3. 事件类型详解 (`event_type` 及 `content` 结构)**
@@ -89,7 +108,7 @@
     *   `message.qq.private.friend` (来自QQ平台的好友私聊)
     *   `message.discord.channel.text` (来自Discord平台的频道文本消息)
 *   **`content` 结构 (List[`Seg`])**:
-    *   列表的第一个 `Seg` 对象**应当 (SHOULD)** 用于承载消息的元数据。
+    *   列表的第一个 `Seg` 对象 **SHOULD** 用于承载消息的元数据。
         *   `Seg(type="message_metadata", data={"message_id": "str", ...})`
     *   后续的 `Seg` 对象列表则代表消息的实际内容片段。
 
@@ -123,7 +142,7 @@
 *   **`event_type` 示例**:
     *   `notice.qq.group.member_increase` (QQ群成员增加)
     *   `notice.discord.channel.reaction_add` (Discord频道消息表情回应增加)
-*   **`content` 结构 (List[`Seg`])**: 通常包含一个 `Seg` 对象，其 `type` 字段**可以 (MAY)** 与 `event_type` 的描述部分相同，其 `data` 字段是一个包含该通知类型所需所有参数的字典。
+*   **`content` 结构 (List[`Seg`])**: 通常包含一个 `Seg` 对象，其 `type` 字段 **MUST** 与 `event_type` **完全相同**，其 `data` 字段是一个包含该通知类型所需所有参数的字典。
 
 **示例: Discord服务器成员加入通知**
 ```json
@@ -143,7 +162,7 @@
   },
   "content": [
     {
-      "type": "notice.guild.member_join",
+      "type": "notice.discord.guild.member_join",
       "data": {
         "join_timestamp": "2023-03-15T12:05:00Z"
       }
@@ -159,6 +178,7 @@
 *   **`event_type` 示例**:
     *   `request.qq.friend.add` (收到QQ好友添加请求)
     *   `request.wechat.group.join_invite` (收到微信群聊邀请)
+*   **`content` 结构 (List[`Seg`])**: 与 `notice` 事件类似，通常包含一个 `Seg` 对象，其 `type` 字段 **MUST** 与 `event_type` **完全相同**。
 
 **示例: 收到QQ加好友请求**
 ```json
@@ -173,7 +193,7 @@
   },
   "content": [
     {
-      "type": "request.friend.add",
+      "type": "request.qq.friend.add",
       "data": {
         "comment": "你好，我是小明！",
         "request_flag": "flag_for_qq_friend_request_abc"
@@ -187,24 +207,27 @@
 
 由Core发起，指示Adapter执行的动作。
 
-*   **`event_type` 示例**:
-    *   `action.qq.message.send` (指示QQ适配器发送消息)
-    *   `action.wechat.user.call` (指示微信适配器打电话)
+*   **`event_type` 规范**: 动作事件的 `event_type` **MUST** 遵循 `action.{platform}.{action_name}` 的格式。
+    *   `platform`: 目标平台的ID (例如 `qq`)。
+    *   `action_name`: 平台内唯一的动作别名 (例如 `send_message`, `kick_member`)。
+*   **`content` 结构 (List[`Seg`])**:
+    *   **标准姿势 (推荐)**: 对于绝大多数动作，`content` 列表 **SHOULD** 只包含**一个** `Seg` 对象，其 `type` 固定为 **`"action_params"`**。该 `Seg` 的 `data` 字段是一个包含了执行此动作所需所有参数的字典。这是为了让Adapter能清晰、统一地解析动作参数。
+    *   **特殊体位 (仅发送消息)**: 仅对于 `send_message` 类型的动作，`content` 列表直接作为消息内容的载荷，包含要发送的一系列消息 `Seg` (如 `text`, `image` 等)。
 
-**示例: Core指示Adapter在微信上打电话**
+**示例: Core指示Adapter踢出QQ群成员 (标准姿势)**
 ```json
 {
   "event_id": "core_action_uuid_1",
-  "event_type": "action.wechat.user.call",
+  "event_type": "action.qq.member.kick",
   "time": 1678886400500.0,
-  "bot_id": "wechat_bot_xyz",
-  "user_info": { "user_id": "target_wechat_user_123" },
+  "bot_id": "10001",
   "content": [
     {
-      "type": "call",
+      "type": "action_params",
       "data": {
-        "video": false,
-        "timeout_seconds": 60
+        "group_id": "group123",
+        "user_id": "user_to_kick_789",
+        "reject_add_request": true
       }
     }
   ]
@@ -218,21 +241,22 @@ Adapter对Core发起的`action.*`的执行结果进行反馈。
 *   **`event_type` 示例**:
     *   `action_response.qq.success`
     *   `action_response.wechat.failure`
+*   **`content` 结构 (List[`Seg`])**: 包含一个 `Seg` 对象，其 `type` 字段 **MUST** 与 `event_type` **完全相同**。
 
-**示例: 微信打电话动作执行失败的响应**
+**示例: 踢人动作执行失败的响应**
 ```json
 {
   "event_id": "adapter_response_uuid_1",
-  "event_type": "action_response.wechat.failure",
+  "event_type": "action_response.qq.failure",
   "time": 1678886400700.0,
-  "bot_id": "wechat_bot_xyz",
+  "bot_id": "10001",
   "content": [
     {
-      "type": "action_response.failure",
+      "type": "action_response.qq.failure",
       "data": {
         "original_event_id": "core_action_uuid_1",
-        "original_action_type": "action.wechat.user.call",
-        "message": "对方已拒接或无应答。"
+        "original_action_type": "action.qq.member.kick",
+        "message": "机器人权限不足，无法踢出该成员。"
       }
     }
   ]
@@ -246,6 +270,7 @@ Adapter对Core发起的`action.*`的执行结果进行反馈。
 *   **`event_type` 示例**:
     *   `meta.qq.lifecycle.connect` (QQ适配器连接成功)
     *   `meta.system.heartbeat` (系统级心跳)
+*   **`content` 结构 (List[`Seg`])**: 与 `notice` 事件类似，通常包含一个 `Seg` 对象，其 `type` 字段**MUST** 与 `event_type` **完全相同**。
 
 **示例: QQ适配器连接成功元事件**
 ```json
@@ -256,7 +281,7 @@ Adapter对Core发起的`action.*`的执行结果进行反馈。
   "bot_id": "10001",
   "content": [
     {
-      "type": "meta.lifecycle.connect",
+      "type": "meta.qq.lifecycle.connect",
       "data": {
         "adapter_version": "2.0.0",
         "protocol_version": "1.6.0"
