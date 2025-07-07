@@ -40,7 +40,7 @@ class Seg:
         if not isinstance(seg_data, dict):
             seg_data = {"value": seg_data} if seg_data is not None else {}
 
-        return cls(type=seg_type, data=seg_type, data=seg_data)
+        return cls(type=seg_type, data=seg_data)
 
     def __str__(self) -> str:
         """

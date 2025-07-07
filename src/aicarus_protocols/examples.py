@@ -192,6 +192,7 @@ def main():
     except Exception as e:
         print(f"测试过程中出现错误: {e}")
         import traceback
+
         traceback.print_exc()
 
 
