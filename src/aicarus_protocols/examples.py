@@ -21,6 +21,9 @@ from . import (
 
 # 在演示开始前，动态注册一些平台相关的事件类型，模拟真实使用场景
 def register_demo_types():
+    """
+    动态注册演示用事件类型。
+    """
     print("--- 动态注册演示用事件类型 ---")
     EventType.register("message.qq.group", "QQ群消息")
     EventType.register("notice.discord.member_join", "Discord成员加入")
@@ -30,10 +33,12 @@ def register_demo_types():
 
 
 def test_message_event():
-    """测试创建用户消息事件。"""
+    """
+    测试创建用户消息事件。
+    """
     print("=== 测试用户消息事件 ===")
 
-    # 创建用户信息 (不再需要 platform 字段)
+    # 创建用户信息 (不再需要 platform 字段)。
     user_info = UserInfo(
         user_id="user_sender_456",
         user_nickname="李四",
@@ -41,11 +46,11 @@ def test_message_event():
         permission_level="member",
     )
 
-    # 创建会话信息 (不再需要 platform 字段)
+    # 创建会话信息 (不再需要 platform 字段)。
     conversation_info = ConversationInfo(
         conversation_id="group123",
         type=ConversationType.GROUP,
-        name="AIcarus淫乱派对",
+        name="AIcarus测试群",
     )
 
     content_segs = [
@@ -68,7 +73,7 @@ def test_message_event():
     print("用户消息事件 (JSON格式):")
     print(json.dumps(event_dict, indent=2, ensure_ascii=False))
 
-    # 测试从字典重构
+    # 测试从字典重构。
     reconstructed_event = Event.from_dict(event_dict)
     print(f"\n重构的事件类型: {reconstructed_event.event_type}")
     print(
@@ -80,7 +85,9 @@ def test_message_event():
 
 
 def test_action_event():
-    """测试创建动作事件 (V6.0 规范)。"""
+    """
+    测试创建动作事件 (V6.0 规范)。
+    """
     print("\n=== 测试动作事件 ===")
 
     target_conversation = ConversationInfo(
@@ -111,7 +118,9 @@ def test_action_event():
 
 
 def test_action_response_event():
-    """测试创建动作响应事件 (V6.0 规范)。"""
+    """
+    测试创建动作响应事件 (V6.0 规范)。
+    """
     print("\n=== 测试动作响应事件 ===")
 
     # 先有一个原始的动作事件
@@ -136,7 +145,9 @@ def test_action_response_event():
 
 
 def test_validation():
-    """测试新的事件类型验证逻辑。"""
+    """
+    测试新的事件类型验证逻辑。
+    """
     print("\n=== 测试事件类型验证 ===")
 
     valid_types = [
@@ -181,7 +192,6 @@ def main():
     except Exception as e:
         print(f"测试过程中出现错误: {e}")
         import traceback
-
         traceback.print_exc()
 
 
