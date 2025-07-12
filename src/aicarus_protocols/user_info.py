@@ -59,9 +59,8 @@ class UserInfo:
         for f in dataclass_fields(self):
             value = getattr(self, f.name)
             if value is not None:
-                if f.name == "additional_data" and not value:  # 不包含空的 additional_data
-                    continue
-                result[f.name] = value
+                if f.name != "additional_data" or value:
+                    result[f.name] = value
         return result
 
     @classmethod
