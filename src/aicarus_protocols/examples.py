@@ -1,29 +1,28 @@
 # src/aicarus_protocols/examples.py
-"""
-AIcarus-Message-Protocol v1.6.0 - 示例和测试
-展示如何使用新的、基于命名空间的协议结构创建和处理各种事件。
+"""AIcarus-Message-Protocol v1.6.0 - 示例和测试.
+
+展示如何使用新的、基于命名空间的协议结构创建和处理各种事件.
 """
 
 import json
+
 from . import (
-    Seg,
-    Event,
-    UserInfo,
-    ConversationInfo,
-    SegBuilder,
-    EventBuilder,
-    ConversationType,
     PROTOCOL_VERSION,
+    ConversationInfo,
+    ConversationType,
+    Event,
+    EventBuilder,
     EventType,
+    Seg,
+    SegBuilder,
+    UserInfo,
     validate_event_type,
 )
 
 
 # 在演示开始前，动态注册一些平台相关的事件类型，模拟真实使用场景
-def register_demo_types():
-    """
-    动态注册演示用事件类型。
-    """
+def register_demo_types() -> None:
+    """动态注册演示用事件类型."""
     print("--- 动态注册演示用事件类型 ---")
     EventType.register("message.qq.group", "QQ群消息")
     EventType.register("notice.discord.member_join", "Discord成员加入")
@@ -32,10 +31,8 @@ def register_demo_types():
     print("------------------------------\n")
 
 
-def test_message_event():
-    """
-    测试创建用户消息事件。
-    """
+def test_message_event() -> Event:
+    """测试创建用户消息事件."""
     print("=== 测试用户消息事件 ===")
 
     # 创建用户信息 (不再需要 platform 字段)。
@@ -76,18 +73,14 @@ def test_message_event():
     # 测试从字典重构。
     reconstructed_event = Event.from_dict(event_dict)
     print(f"\n重构的事件类型: {reconstructed_event.event_type}")
-    print(
-        f"从事件中解析出的平台: {reconstructed_event.get_platform()}"
-    )  # <--- 测试新方法！
+    print(f"从事件中解析出的平台: {reconstructed_event.get_platform()}")  # <--- 测试新方法！
     print(f"消息文本内容: '{reconstructed_event.get_text_content()}'")
 
     return message_event
 
 
-def test_action_event():
-    """
-    测试创建动作事件 (V6.0 规范)。
-    """
+def test_action_event() -> Event:
+    """测试创建动作事件."""
     print("\n=== 测试动作事件 ===")
 
     target_conversation = ConversationInfo(
@@ -117,10 +110,8 @@ def test_action_event():
     return action_event
 
 
-def test_action_response_event():
-    """
-    测试创建动作响应事件 (V6.0 规范)。
-    """
+def test_action_response_event() -> Event:
+    """测试创建动作响应事件."""
     print("\n=== 测试动作响应事件 ===")
 
     # 先有一个原始的动作事件
@@ -144,10 +135,8 @@ def test_action_response_event():
     return success_response
 
 
-def test_validation():
-    """
-    测试新的事件类型验证逻辑。
-    """
+def test_validation() -> None:
+    """测试新的事件类型验证逻辑."""
     print("\n=== 测试事件类型验证 ===")
 
     valid_types = [
@@ -174,8 +163,8 @@ def test_validation():
         print(f"  - '{t}': {'✅ 合法' if is_valid else '❌ 非法'}")
 
 
-def main():
-    """主测试函数。"""
+def main() -> None:
+    """主测试函数."""
     print(f"AIcarus-Message-Protocol v{PROTOCOL_VERSION} 示例和测试 (V6.0 规范)")
     print("=" * 60)
 
