@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-
 import setuptools
 
-with open("README.md", "r", encoding="utf-8") as fh:
+with open("README.md", encoding="utf-8") as fh:
     long_description = fh.read()
 
 AICARUS_PROTOCOL_VERSION = "1.6.0"  # 与你文档中的版本号保持一致
@@ -15,7 +13,7 @@ setuptools.setup(
     description="AIcarus 项目核心与适配器之间的通信协议定义库",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/AIcarusDev/AIcarus-Message-Protocol",
+    url="https://github.com/AIcarusDev/AIcarusProtocols",
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     # Python 版本要求

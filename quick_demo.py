@@ -1,27 +1,27 @@
 # quick_demo.py
-"""
-AIcarus-Message-Protocol v1.6.0 快速功能演示
-展示基于命名空间的动态事件类型系统。
+"""AIcarus-Message-Protocol v1.6.0 快速功能演示.
+
+展示基于命名空间的动态事件类型系统.
 """
 
-import sys
 import os
+import sys
 
 # 添加src目录到Python路径
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
 
 
-def quick_demo():
-    """快速演示核心功能"""
+def quick_demo() -> None:
+    """快速演示核心功能."""
     print("🚀 AIcarus-Message-Protocol v1.6.0 快速演示")
     print("=" * 50)
 
     # 从新模块导入
     from aicarus_protocols import (
+        Event,
         EventType,
         validate_event_type,
     )
-    from aicarus_protocols import Event
 
     # 1. 动态、自由的事件类型注册
     print("1️⃣ 动态事件类型注册 (遵循命名空间规则)")
@@ -34,12 +34,8 @@ def quick_demo():
     print("\n2️⃣ 统一的事件类型验证")
     valid_type = "notice.qq.friend_add"
     invalid_type = "message.private"  # 旧格式，现在不合法了
-    print(
-        f"   - 验证 '{valid_type}': {'合法' if validate_event_type(valid_type) else '非法'}"
-    )
-    print(
-        f"   - 验证 '{invalid_type}': {'合法' if validate_event_type(invalid_type) else '非法'}"
-    )
+    print(f"   - 验证 '{valid_type}': {'合法' if validate_event_type(valid_type) else '非法'}")
+    print(f"   - 验证 '{invalid_type}': {'合法' if validate_event_type(invalid_type) else '非法'}")
 
     # 3. 从事件中轻松获取平台信息
     print("\n3️⃣ 从事件中解析平台信息")
@@ -59,7 +55,9 @@ def quick_demo():
     event_dict = test_event.to_dict()
     has_platform_field = "platform" in event_dict
     print(
-        f"   - Event 字典中是否还存在顶层 'platform' 字段: {'是' if has_platform_field else '否，已被移除！'}"
+        f"   - Event 字典中是否还存在顶层 'platform' 字段: {
+            '是' if has_platform_field else '否，已被移除！'
+        }"
     )
 
     print("\n" + "=" * 50)
