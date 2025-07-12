@@ -209,9 +209,9 @@ class Event:
         return f"Event(id='{self.event_id}', type='{self.event_type}')"
 
     def __repr__(self) -> str:
-        """返回 Event 的详细表示.
+        """返回 Event 的字符串表示，与 __str__ 相同.
 
         Returns:
-            str: 包含所有字段的详细字符串表示.
+            str: Event 的简短字符串表示.
         """
         return self.__str__()
