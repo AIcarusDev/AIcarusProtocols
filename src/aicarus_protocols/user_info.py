@@ -58,9 +58,8 @@ class UserInfo:
         result = {}
         for f in dataclass_fields(self):
             value = getattr(self, f.name)
-            if value is not None:
-                if f.name != "additional_data" or value:
-                    result[f.name] = value
+            if value is not None and (f.name != "additional_data" or value):
+                result[f.name] = value
         return result
 
     @classmethod
