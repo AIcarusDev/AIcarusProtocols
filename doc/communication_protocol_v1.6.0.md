@@ -218,7 +218,7 @@
 ```json
 {
   "event_id": "core_action_uuid_1",
-  "event_type": "action.qq.member.kick",
+  "event_type": "action.qq.kick_member",
   "time": 1678886400500.0,
   "bot_id": "10001",
   "content": [
@@ -326,7 +326,7 @@ def process_user_message(event: Event):
         # 2. 构建要发送给 Adapter 的纯净 Action Event
         kick_action_event = Event(
             event_id=EventBuilder.generate_event_id(),
-            event_type="action.qq.member.kick",
+            event_type="action.qq.kick_member",
             time=EventBuilder.get_current_timestamp(),
             bot_id=event.bot_id,
             content=[
