@@ -1,7 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "AIcarusProtocols"
+name = "aicarus_protocols" 
 version = "1.6.0"
-description = "本库定义了 AIcarus 项目中 Core (核心) 与 Adapter (适配器) 之间进行通信所遵循的标准化事件结构。它基于 **AIcarus-Message-Protocol v1.6.0**。"
+authors = [
+  { name="Dax233", email="bakadax@qq.com" },
+]
+description = "AIcarus 项目核心与适配器之间的通信协议定义库"
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/AIcarusDev/AIcarusProtocols"
+"Bug Tracker" = "https://github.com/AIcarusDev/AIcarusProtocols/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"] 
 
 [tool.ruff]
 # 我们的代码将以 Python 3.12+ 为目标。
