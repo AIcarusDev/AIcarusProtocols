@@ -119,6 +119,8 @@ class SegBuilder:
 
     @staticmethod
     def image(
+        hash: str,
+        mime_type: str,
         url: str | None = None,
         file_id: str | None = None,
         base64: str | None = None,
@@ -128,6 +130,8 @@ class SegBuilder:
         """创建图片 Seg.
 
         Args:
+            hash (str): 图片的哈希值.
+            mime_type (str): 图片的 MIME 类型.
             url (Optional[str]): 图片 URL.
             file_id (Optional[str]): 文件 ID.
             base64 (Optional[str]): Base64 编码的图片数据.
@@ -137,7 +141,7 @@ class SegBuilder:
         Returns:
             Seg: 创建的图片 Seg 实例.
         """
-        data = {}
+        data = {"hash": hash, "mime_type": mime_type}
         if url is not None:
             data["url"] = url
         if file_id is not None:
@@ -150,6 +154,44 @@ class SegBuilder:
         # 允许传入额外的参数
         data.update(kwargs)
         return Seg(type="image", data=data)
+
+    @staticmethod
+    def video(
+        hash: str,
+        mime_type: str,
+        url: str | None = None,
+        file_id: str | None = None,
+        base64: str | None = None,
+        summary: str | None = None,
+        **kwargs: Any,
+    ) -> Seg:
+        """创建视频 Seg.
+
+        Args:
+            hash (str): 视频的哈希值.
+            mime_type (str): 视频的 MIME 类型.
+            url (Optional[str]): 视频 URL.
+            file_id (Optional[str]): 文件 ID.
+            base64 (Optional[str]): Base64 编码的视频数据.
+            summary (Optional[str]): 视频摘要.
+            kwargs: 额外参数.
+
+        Returns:
+            Seg: 创建的视频 Seg 实例.
+        """
+        data = {"hash": hash, "mime_type": mime_type}
+        if url is not None:
+            data["url"] = url
+        if file_id is not None:
+            data["file_id"] = file_id
+        if base64 is not None:
+            data["base64"] = base64
+        if summary is not None:
+            data["summary"] = summary
+
+        # 允许传入额外的参数
+        data.update(kwargs)
+        return Seg(type="video", data=data)
 
     @staticmethod
     def reply(message_id: str) -> Seg:
@@ -228,6 +270,24 @@ class SegBuilder:
             Seg: 创建的动作类型 Seg 实例.
         """
         return Seg(type=f"action.{action_type}", data=kwargs)
+
+    @staticmethod
+    def action_adapter_media_get(hash: str, platform_id: str) -> Seg:
+        """创建 action.adapter.media.get 动作 Seg.
+
+        由 Core 发起，向 Adapter 请求媒体文件.
+
+        Args:
+            hash (str): 媒体文件的哈希值.
+            platform_id (str): 平台 ID.
+
+        Returns:
+            Seg: 创建的动作 Seg 实例.
+        """
+        return Seg(
+            type="action.adapter.media.get",
+            data={"hash": hash, "platform_id": platform_id},
+        )
 
     @staticmethod
     def action_response(response_type: str, **kwargs: Any) -> Seg:
