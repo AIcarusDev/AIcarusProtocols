@@ -16,10 +16,12 @@ from .seg import Seg, SegBuilder
 from .user_info import UserInfo
 
 # 工具函数
+from .system_events import build_system_status_event
 from .utils import extract_text_from_content, filter_segs_by_type, find_seg_by_type
 
 __version__ = "1.6.0"
 __all__ = [
+    "build_system_status_event",
     "PROTOCOL_VERSION",
     "ConversationInfo",
     "ConversationType",

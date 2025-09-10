@@ -26,7 +26,7 @@ def validate_event_type(event_type: str) -> bool:
 
     # 事件类型必须只包含字母、数字、下划线和点，且不能有连续点、首尾点
     pattern = (
-        r"^(message|notice|request|action|action_response|meta)\.[A-Za-z0-9_]+(\.[A-Za-z0-9_]+)+$"
+        r"^(message|notice|request|action|action_response|meta|system)\.[A-Za-z0-9_]+(\.[A-Za-z0-9_]+)*$"
     )
     if not re.match(pattern, event_type):
         return False
